@@ -62,8 +62,7 @@ namespace FirstRESTfulAPI.Controllers
         {
             Message msg = new Message();
             _employeesContext.Add(employee);
-            var entity = _employeesContext.Entry<Employee>(employee);
-            entity.State = EntityState.Modified;
+            _employeesContext.Entry<Employee>(employee).State = EntityState.Modified;
             try
             {
                 int num =_employeesContext.SaveChanges();
