@@ -1,0 +1,34 @@
+﻿<div id="rest">
+    <div v-for="item in dataAll">
+        <input type="text" :value="item.firstName" />
+        <input type="text" :value="item.lastName" />
+    </div>
+    
+</div>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+    <script src="~/js/axios.min.js"></script>
+    <script>
+        var app = new Vue({
+            data:{
+                dataAll:[]
+            },
+            methods:{
+
+            },
+            mounted:function(){
+                let url = "https://localhost:7102/api/EmployeeApi/GetAll/rawdata";
+                let self = this;
+                axios.get(url)
+                .then(res=>{
+                    self.dataAll = res.data;
+                })
+                .catch(err =>{
+
+                });
+            }
+        });
+        app.$mount("#rest")
+    </script>
+}
