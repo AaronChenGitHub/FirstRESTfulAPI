@@ -39,7 +39,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+//Use Middleware
 app.UseCors("myweb");
 
 app.MapControllers();
