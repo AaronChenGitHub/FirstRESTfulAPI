@@ -17,9 +17,12 @@ Console.WriteLine(corsURL[0]);
 builder.Services.AddCors(opt => {
     opt.AddPolicy("myweb", bul =>
     {
-        bul.WithHeaders(corsURL[0]);
-        bul.WithMethods(corsURL[0]);
-        bul.WithOrigins(corsURL[0]);
+        //bul.WithHeaders(corsURL[0]);
+        //bul.WithMethods(corsURL[0]);
+        //bul.WithOrigins(corsURL[0]);
+        bul.AllowAnyHeader();
+        bul.AllowAnyMethod();
+        bul.AllowAnyOrigin();
     });
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

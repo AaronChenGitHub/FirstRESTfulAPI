@@ -1,34 +1,90 @@
 ﻿<div id="rest">
-    <div v-for="item in dataAll">
-        <input type="text" :value="item.firstName" />
-        <input type="text" :value="item.lastName" />
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <input type="text" v-model="firstName" placeholder="請輸入名字..." />
+                <input type="text" v-model="lastName" placeholder="請輸入姓氏..." />
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-primary" v-on:click="addOnce">新增</button>
+            </div>
+        </div>
+
+        <div class="mt-3" v-for="item in dataAll">
+            <div class="row">
+                <div class="col-6">
+                    <label>員工:</label>
+                    <input type="text" :value="item.firstName" />
+                    <input type="text" :value="item.lastName" />
+                </div>
+            </div>
+        </div>
     </div>
-    
+
 </div>
 
 @section Scripts{
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
-    <script src="~/js/axios.min.js"></script>
-    <script>
-        var app = new Vue({
-            data:{
-                dataAll:[]
-            },
-            methods:{
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+<script src="~/js/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        data: {
+            dataAll: [],
+            firstName: '',
+            lastName: ''
+        },
+        methods: {
+            addOnce: function () {
+                let self = this;
+                if (self.firstName === "" && self.lastName === "") {
+                    self.firstName = null;
+                    self.lastName = null;
+                }
+                axios({
+                    method: 'POST',
+                    url: "https://localhost:5001/api/EmployeeApi/Add/rawdata",
+                    headers: { "Content-Type": "application/json" },
+                    data: {
+                        "FirstName": self.firstName,
+                        "LastName": self.lastName
+                    }
+                })
+                    .then(res => {
+                        console.log(res.data);
+                            app.$nextTick(function () {
+                                let url = "https://localhost:5001/api/EmployeeApi/GetAll/rawdata";
+                                let self = this;
+                                axios.get(url)
+                                    .then(res => {
+                                        self.dataAll = res.data;
+                                    })
+                                    .catch(err => {
 
+                                    });
+                            })
+                        alert("新增成功");
+                    })
+                        .catch(err => {
+                        console.log(err);
+                        alert("格式不對喔~");
+                    });
             },
-            mounted:function(){
-                let url = "https://localhost:7102/api/EmployeeApi/GetAll/rawdata";
+            getAll: function () {
+                let url = "https://localhost:5001/api/EmployeeApi/GetAll/rawdata";
                 let self = this;
                 axios.get(url)
-                .then(res=>{
-                    self.dataAll = res.data;
-                })
-                .catch(err =>{
+                    .then(res => {
+                        self.dataAll = res.data;
+                    })
+                    .catch(err => {
 
-                });
+                    });
             }
-        });
-        app.$mount("#rest")
-    </script>
+        },
+        mounted: function () {
+            this.getAll();
+        }
+    });
+    app.$mount("#rest")
+</script>
 }
