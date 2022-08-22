@@ -67,7 +67,7 @@
                     }
                     axios({
                         method: 'POST',
-                        url: "https://localhost:5001/api/EmployeeApi/Add/rawdata",
+                        url: "https://localhost:7102/api/EmployeeApi/Add/rawdata",
                         headers: { "Content-Type": "application/json" },
                         data: {
                             "FirstName": self.firstName,
@@ -77,7 +77,7 @@
                         .then(res => {
                             console.log(res.data);
                             app.$nextTick(function () {
-                                let url = "https://localhost:5001/api/EmployeeApi/GetAll/rawdata";
+                                let url = "https://localhost:7102/api/EmployeeApi/GetAll/rawdata";
                                 let self = this;
                                 axios.get(url)
                                     .then(res => {
@@ -97,7 +97,7 @@
                         });
                 },
                 getAll: function () {
-                    let url = "https://localhost:5001/api/EmployeeApi/GetAll/rawdata";
+                    let url = "https://localhost:7102/api/EmployeeApi/GetAll/rawdata";
                     let self = this;
                     axios.get(url)
                         .then(res => {
@@ -111,7 +111,7 @@
                     axios(
                         {
                             method: 'PUT',
-                            url: "https://localhost:5001/api/EmployeeApi/update/rawdata",
+                            url: "https://localhost:7102/api/EmployeeApi/update/rawdata",
                             headers: { "Content-Type": "application/json" },
                             data: this.curEmp
                         }
@@ -163,14 +163,14 @@
                      axios(
                         {
                             method: 'DELETE',
-                            url: `https://localhost:5001/api/EmployeeApi/delete/rawdata?id=${this.curEmp.employeeId}`,
+                            url: `https://localhost:7102/api/EmployeeApi/delete/rawdata?id=${this.curEmp.employeeId}`,
                             headers: { "Content-Type": "application/json" }
                         }
                     ).then(
                         (resp) => {
                             console.log(resp);
                             app.$nextTick(function () {
-                                let url = "https://localhost:5001/api/EmployeeApi/GetAll/rawdata";
+                                let url = "https://localhost:7102/api/EmployeeApi/GetAll/rawdata";
                                 let self = this;
                                 axios.get(url)
                                     .then(res => {
