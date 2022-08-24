@@ -8,12 +8,12 @@ namespace FirstRESTfulAPI
     public class EmployeeServices : IEmoloyee
     {
         private readonly EmployeesContext _employeesContext;
-        private readonly Message _message;
-        public EmployeeServices(EmployeesContext employeesContext, Message message)
+        public EmployeeServices(EmployeesContext employeesContext)
         {
             _employeesContext = employeesContext;
-            _message = message;
         }
+
+        Message msg = new Message();
         
         public ActionResult<IEnumerable<Employee>> GetAll()
         {
@@ -33,19 +33,19 @@ namespace FirstRESTfulAPI
                 int num = _employeesContext.SaveChanges();
                 if (num > 0)
                 {
-                    _message.Code = 200;
-                    _message.msg = $"員工{employee.FirstName}新增成功!!";
+                    msg.Code = 200;
+                    msg.msg = $"員工{employee.FirstName}新增成功!!";
                     
                 }
             }
             catch (DbUpdateException ex)
             {
 
-                _message.Code = 400;
-                _message.msg = $"員工{employee.FirstName}新增失敗!!";
+                msg.Code = 400;
+                msg.msg = $"員工{employee.FirstName}新增失敗!!";
                 
             }
-            return _message;
+            return msg;
         }
 
         public Message UpdateEmployee([FromBody] Employee employee)
@@ -57,18 +57,18 @@ namespace FirstRESTfulAPI
                 int num = _employeesContext.SaveChanges();
                 if (num > 0)
                 {
-                    _message.Code = 200;
-                    _message.msg = $"員工{employee.FirstName}修改完成";
+                    msg.Code = 200;
+                    msg.msg = $"員工{employee.FirstName}修改完成";
                     
                 }
             }
             catch (DbUpdateException ex)
             {
-                _message.Code = 400;
-                _message.msg = $"員工{employee.FirstName}修改失敗";
+                msg.Code = 400;
+                msg.msg = $"員工{employee.FirstName}修改失敗";
                 
             }
-            return _message;
+            return msg;
         }
 
 
@@ -77,8 +77,8 @@ namespace FirstRESTfulAPI
             var query = _employeesContext.Employees.Where(x => x.EmployeeId == id).FirstOrDefault<Employee>();
             if (query == null)
             {
-                _message.Code = 400;
-                _message.msg = $"查無此員工";
+                msg.Code = 400;
+                msg.msg = $"查無此員工";
                 
             }
             else
@@ -89,20 +89,20 @@ namespace FirstRESTfulAPI
                     int num = _employeesContext.SaveChanges();
                     if (num > 0)
                     {
-                        _message.Code = 200;
-                        _message.msg = $"刪除成功";
+                        msg.Code = 200;
+                        msg.msg = $"刪除成功";
                         
                     }
 
                 }
                 catch (DbUpdateException ex)
                 {
-                    _message.Code = 400;
-                    _message.msg = "刪除失敗";
+                    msg.Code = 400;
+                    msg.msg = "刪除失敗";
                     
                 }
             }
-            return _message;
+            return msg;
         }
 
     }

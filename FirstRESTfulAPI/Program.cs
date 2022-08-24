@@ -34,7 +34,7 @@ builder.Services.AddDbContext<EmployeesContext>((builder) => {
     builder.UseSqlServer(manager.GetConnectionString("Employee"));
 });
 builder.Services.AddScoped<IEmoloyee, EmployeeServices>();
-builder.Services.AddSingleton<Message>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
